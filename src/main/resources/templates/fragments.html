@@ -20,14 +20,24 @@
 		      <li class="nav-item" th:classappend="${option == 'about' ? 'active' : ''}">
 		        <a class="nav-link" th:href="@{/about}">About Us</a>
 		      </li>
-		      <li class="nav-item" th:classappend="${option == 'browse' ? 'active' : ''}">
-		        <a class="nav-link" th:href="@{/browse}">Browse</a>
+		      <li class="nav-item dropdown" th:classappend="${option == 'browse' ? 'active' : ''}">
+		        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+		          Browse
+		        </a>
+		        <div class="dropdown-menu">
+		          <span class="font-weight-bold">Favorite Genres</span>
+		          <a class="dropdown-item" th:href="@{/}">Biography</a>
+		          <a class="dropdown-item" th:href="@{/}">Business</a>
+		          <a class="dropdown-item" th:href="@{/}">Children's</a>
+		          <a class="dropdown-item" th:href="@{/}">Classics</a>
+		          <a class="dropdown-item" th:href="@{/}">Comics</a>
+		          <a class="dropdown-item" th:href="@{/}">Crime</a>
+		          <a class="dropdown-item" th:href="@{/genres}">Fantasy</a>
+		          <a class="dropdown-item" th:href="@{/}">All Genres</a>
+		        </div>
 		      </li>
 		      <li class="nav-item" th:classappend="${option == 'friends' ? 'active' : ''}">
 		        <a class="nav-link" th:href="@{/friends}">Friends</a>
-		      </li>
-		      <li class="nav-item" th:classappend="${option == 'signin' ? 'active' : ''}">
-		        <a class="nav-link" th:href="@{/signin}">Sign In</a>
 		      </li>
 		      <li class="nav-item" th:classappend="${option == 'signup' ? 'active' : ''}">
 		        <a class="nav-link" th:href="@{/signup}">Sign Up</a>
@@ -38,16 +48,6 @@
 		    </ul>
 		  </div>
 		</nav>
-		
-		<div class="mt-4 w-75 mx-auto">
-			<form>
-			  <div class="row">
-			    <div class="col">
-			      <input type="text" class="form-control form-control-lg text-center" placeholder="Search By Title/Authors/Genre">
-			    </div>
-			  </div>
-			</form>
-		</div>
 	</div>
 	
 	<div th:fragment="footer">

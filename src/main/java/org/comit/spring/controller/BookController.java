@@ -10,4 +10,19 @@ public class BookController {
 	String index() {
 		return "index";
 	}
+	
+	@GetMapping("/admin")
+	String addNewBook() {
+		return "admin";
+	}
+	
+	@GetMapping("/genres")
+	String browseGenres() {
+		return "genres";
+	}
+	
+	@GetMapping("/search")
+	String searchBooks() {
+		return "search";
+	}
 }
