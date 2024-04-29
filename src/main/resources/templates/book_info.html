@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<link th:href="@{/styles/index.css}" rel="stylesheet" />
+<title>Book Lovers Kingdom</title>
+</head>
+<body>
+	<div class="container mt-5 w-80">
+		<div th:replace="~{fragments :: header(home)}"></div>
+	</div>
+	
+	<div class="row">
+		<div class="col mx-5 mt-4 border py-3" id="newsDiv">
+			<h3 class="text-center">LATEST NEWS</h3>
+			<hr class="mw-100">
+		</div>
+		<div th:object="${book}" class="col-8 mt-4 jumbotron bg-light border border-info py-4" id="contentDiv">
+			<h3 class="position-absolute text-center text-dark m-0 px-3 py-2" th:text="*{title} + ' by ' + *{authorFirstName} + ' ' + *{authorLastName}"></h3>
+	        <hr class="my-5"/>
+	        
+	        <div class="px-3 mb-4">
+	        	<div class="table-responsive">
+				  	<table class="table table-hover">
+					    <tr>
+					      <th class="col-sm-2 align-middle">Rate this Book</th>
+					      <td><a th:href="'javascript:redirectToReview(' + ${book.idBook} + ')'" class="btn btn-dark btn-md align-middle" style="min-width: 100px">Write a Review</a></td>
+					    </tr>
+					    <tr>
+					      <th class="col-sm-2 align-middle">Cover</th>
+					      <td><img alt="" th:src="@{/bookImages/} + *{coverImgPath}" height="180px" width="180px" /></td>
+					    </tr>
+					    <tr>
+					      <th>Title</th>
+					      <td th:text="*{title}"></td>
+					    </tr>
+					    <tr>
+					      <th>Author</th>
+					      <td th:text="*{authorFirstName} + ' ' + *{authorLastName}"></td>
+					    </tr>
+					    <tr>
+					      <th>Genre</th>
+					      <td th:text="*{genre}"></td>
+					    </tr>
+					    <tr>
+					      <th>Rating</th>
+					      <td th:text="*{rating}"></td>
+					    </tr>
+					    <tr>
+					      <th>Publisher</th>
+					      <td th:text="*{publisher}"></td>
+					    </tr>
+					    <tr>
+					      <th>Publishing Date</th>
+					      <td th:text="*{publishingDate}"></td>
+					    </tr>
+					    <tr>
+					      <th>Number of Pages</th>
+					      <td th:text="*{numberOfPages}"></td>
+					    </tr>
+					    <tr>
+					      <th>Language</th>
+					      <td th:text="*{language}"></td>
+					    </tr>
+					    <tr>
+					      <th>ISBN</th>
+					      <td th:text="*{isbn}"></td>
+					    </tr>
+					    <tr>
+					      <th>Is For Sale</th>
+					      <td th:text="*{isForSale} ? 'yes' : 'no'"></td>
+					    </tr>
+					    <tr>
+					      <th>Is For Rent</th>
+					      <td th:text="*{isForRent} ? 'yes' : 'no'"></td>
+					    </tr>
+					    <tr>
+					      <th>Sales Price</th>
+					      <td th:text="*{salesPrice}"></td>
+					    </tr>
+					    <tr>
+					      <th>Rent Price</th>
+					      <td th:text="*{rentPrice}"></td>
+					    </tr>
+					    <tr>
+					      <th>Sales Quantity</th>
+					      <td th:text="*{salesQuantity}"></td>
+					    </tr>
+					</table>
+				  </div>
+				  
+				  <!-- Display the list of Reviews -->
+				  <div class="table-responsive">
+				  	<h5 class="font-weight-bold">Reviews</h5>
+				  	<table class="table table-borderless">
+				        <tr th:each="comment, iStat : ${commentPage.content}"
+				            th:style="${iStat.odd}? ''"
+				            th:alt-title="${iStat.even}? 'even' : 'odd'">
+				            <td th:text="${comment.user.username}" class="col-sm-1 font-weight-bold" />
+				            <td th:text="${comment.commentMsg}" class="col-sm-9" />
+				            <td th:text="${comment.commentDate}" class="col-sm-2 font-weight-bold" />
+				        </tr>
+					</table>
+					<div th:if="${commentPage.totalPages > 0}" class="pagination"
+					    th:each="pageNumber : ${pageNumbers}">
+					    <a th:href="@{/book/ + ${book.idBook} + (size=${commentPage.size}, page=${pageNumber})}"
+					        th:text=${pageNumber}
+					        th:class="${pageNumber==commentPage.number + 1} ? active"></a>
+					</div>
+				  </div>
+	        </div>
+        </div>
+		
+	</div>
+	
+	<div th:replace="~{fragments :: footer}"></div>
+	<div th:replace="~{fragments :: scripts}"></div>
+	<div th:replace="~{fragments :: scripts_list}"></div>
+</body>
+</html>

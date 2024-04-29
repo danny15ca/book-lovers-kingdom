@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Users System</title>
+</head>
+<body>
+  <div class="container mt-5 w-75">
+
+    <div th:replace="~{fragments :: header(list)}"></div> 
+	
+	<div class="table-responsive mt-3">
+		<table class="table table-striped table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">Id</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Username</th>
+		      <th scope="col" class="text-center">Birth</th>
+		      <th scope="col" class="text-center">Role</th>
+		      <th scope="col" class="text-center">#</th>
+		      <th scope="col">#</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="user: ${users}">
+		      <th th:text="${user.idUser}" />
+		      <td th:text="${user.firstName} + ' ' + ${user.lastName}"/>
+		      <td th:text="${#strings.toUpperCase(user.username)} "/>
+		      <td class="text-center" th:text="${#dates.format(user.birth, 'dd-MM-yyyy')}"/>
+		      <td th:text="${#strings.toUpperCase(user.role.nameRole)} "/>
+		      <td class="text-right"><a th:href="@{/update/} + ${user.idUser}" class="btn btn-warning btn-sm">Update</a></td>
+		      <td><a th:href="'javascript:deleteUser(' + ${user.idUser} + ')'" class="btn btn-danger btn-sm">Delete</a></td>
+		    </tr>
+		  </tbody>
+		</table>	
+	</div>
+
+  </div>
+
+  <div th:replace="~{fragments :: scripts}"></div>
+  <div th:replace="~{fragments :: scripts_list}"></div>
+   
+</body>
+</html>

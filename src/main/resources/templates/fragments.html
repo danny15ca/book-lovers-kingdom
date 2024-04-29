@@ -14,35 +14,38 @@
 		      <li class="nav-item" th:classappend="${option == 'home' ? 'active' : ''}">
 		        <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
 		      </li>
-		      <li class="nav-item" th:classappend="${option == 'news' ? 'active' : ''}">
-		        <a class="nav-link" th:href="@{/news}">News</a>
-		      </li>
-		      <li class="nav-item" th:classappend="${option == 'about' ? 'active' : ''}">
-		        <a class="nav-link" th:href="@{/about}">About Us</a>
-		      </li>
-		      <li class="nav-item dropdown" th:classappend="${option == 'browse' ? 'active' : ''}">
-		        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-		          Browse
-		        </a>
-		        <div class="dropdown-menu">
-		          <span class="font-weight-bold">Favorite Genres</span>
-		          <a class="dropdown-item" th:href="@{/}">Biography</a>
-		          <a class="dropdown-item" th:href="@{/}">Business</a>
-		          <a class="dropdown-item" th:href="@{/}">Children's</a>
-		          <a class="dropdown-item" th:href="@{/}">Classics</a>
-		          <a class="dropdown-item" th:href="@{/}">Comics</a>
-		          <a class="dropdown-item" th:href="@{/}">Crime</a>
-		          <a class="dropdown-item" th:href="@{/genres}">Fantasy</a>
-		          <a class="dropdown-item" th:href="@{/}">All Genres</a>
-		        </div>
-		      </li>
-		      <li class="nav-item" th:classappend="${option == 'friends' ? 'active' : ''}">
-		        <a class="nav-link" th:href="@{/friends}">Friends</a>
-		      </li>
-		      <li class="nav-item" th:classappend="${option == 'signup' ? 'active' : ''}">
+<!-- 		      <li class="nav-item" th:classappend="${option == 'news' ? 'active' : ''}"> -->
+<!-- 		        <a class="nav-link" th:href="@{/news}">News</a> -->
+<!-- 		      </li> -->
+<!-- 		      <li class="nav-item" th:classappend="${option == 'about' ? 'active' : ''}"> -->
+<!-- 		        <a class="nav-link" th:href="@{/about}">About Us</a> -->
+<!-- 		      </li> -->
+<!-- 		      <li class="nav-item dropdown" th:classappend="${option == 'browse' ? 'active' : ''}"> -->
+<!-- 		        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false"> -->
+<!-- 		          Browse -->
+<!-- 		        </a> -->
+<!-- 		        <div class="dropdown-menu"> -->
+<!-- 		          <span class="font-weight-bold">Favorite Genres</span> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/}">Biography</a> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/}">Business</a> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/}">Children's</a> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/}">Classics</a> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/}">Comics</a> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/}">Crime</a> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/genres}">Fantasy</a> -->
+<!-- 		          <a class="dropdown-item" th:href="@{/}">All Genres</a> -->
+<!-- 		        </div> -->
+<!-- 		      </li> -->
+<!-- 		      <li class="nav-item" th:classappend="${option == 'friends' ? 'active' : ''}"> -->
+<!-- 		        <a class="nav-link" th:href="@{/friends}">Friends</a> -->
+<!-- 		      </li> -->
+		      <li class="nav-item" th:classappend="${option == 'signup' ? 'active' : ''}" th:if="${authUser == ''}">
 		        <a class="nav-link" th:href="@{/signup}">Sign Up</a>
 		      </li>
-		      <li class="nav-item" th:classappend="${option == 'signin' ? 'active' : ''}" th:if="${option == 'signin'}">
+		      <li class="nav-item active" th:if="${authUser != ''}">
+		        <a class="nav-link">Hello, <span sec:authentication="name"></span></a>
+		      </li>
+		      <li class="nav-item" th:classappend="${option == 'home' ? 'active' : ''}" th:if="${authUser != ''}">
 		        <a class="nav-link" th:href="@{/logout}">Logout</a>
 		      </li>
 		    </ul>
@@ -104,6 +107,80 @@
 		<script src="https://kit.fontawesome.com/f4e20c8794.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </div>
+    
+    <div th:fragment="scripts_list">
+	    <script th:inline="javascript">
+		    /*<![CDATA[*/
+		    
+	    	let operation = /*[[${operation}]]*/ '';
+	
+		  	/*]]>*/
+		  	
+		  	if (operation != null) {
+		  		iziToast.show({
+		  		    title: 'Success',
+		  		    message: 'The user was ' + operation + 'd successfully',
+		  		    position: 'topRight',
+		  		    timeout: 5000,
+		  		    color: 'green'
+		  		});
+		  	}
+		
+		
+			function deleteBook(idBook) {
+				iziToast.question({
+				    timeout: 20000,
+				    close: false,
+				    overlay: true,
+				    displayMode: 'once',
+				    id: 'question',
+				    zindex: 999,
+				    title: 'Hey',
+				    message: 'Do you want to delete the book id: ' + idBook + '?',
+				    position: 'center',
+				    buttons: [
+				        ['<button><b>YES</b></button>', function () {
+				            document.location.href = '/admin/delete-book/' + idBook;
+				        }, true],
+				        ['<button>NO</button>', function (instance, toast) {
+				            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+				        }],
+				    ]
+				});
+			}
+	
+		    function addBook() {
+		    	document.location.href = '/admin/add-book';
+	    	}
+		    
+		    function returnAdminPage() {
+		    	document.location.href = '/admin';
+		    }
+		    
+		    function redirectToReview(idBook) {
+		    	document.location.href = '/book/review/' + idBook;
+		    }
+		    
+		    function readBookImage(input) {
+	            if (input.files && input.files[0]) {
+	                var reader = new FileReader();
+
+	                reader.onload = function (e) {
+	                    $('#bookImagePreview')
+	                        .attr('src', e.target.result);
+	                };
+
+	                reader.readAsDataURL(input.files[0]);
+	            }
+	        }
+		    
+		    function search() {
+		    	let searchText = document.getElementById("searchBox").value;
+		    	document.location.href = '/book/search/' + searchText;
+		    }
+    	</script>
     </div>
 </body>
 </html>

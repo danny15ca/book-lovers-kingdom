@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 <link th:href="@{/styles/index.css}" rel="stylesheet" />
 <link th:href="@{/styles/signup.css}" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <title>Book Lovers Kingdom</title>
 </head>
 <body>
@@ -27,58 +25,53 @@
 	        <hr class="my-5"/>
 	        
 	        <div class="px-3 mb-4">
-	        	<form th:action="@{/signup}" method="post">
+	        	<form th:action="@{/signup}" th:object="${user}" method="post">
 				  <div class="form-group">
 				    <label for="username">Username:</label>
-				    <input type="text" class="form-control" required>
+				    <input type="text" class="form-control" th:field="*{username}" required>
+				    <span class="text-danger" th:errors="*{username}"></span>
 				  </div>
 				  <div class="form-group">
 				    <label for="password">Password:</label>
-				    <input type="password" class="form-control" required>
-				  </div>
-				  <div class="form-group">
-				    <label for="confirmPassword">Confirm Password:</label>
-				    <input type="password" class="form-control" required>
+				    <input type="password" class="form-control" th:field="*{password}" required>
 				  </div>
 				  <div class="form-group">
 				    <label for="email">Email:</label>
-				    <input type="email" class="form-control" placeholder="name@example.com" required>
+				    <input type="email" class="form-control" placeholder="name@example.com" th:field="*{email}" required>
 				  </div>
 				  <div class="form-group">
 				    <label for="firstName">First Name:</label>
-				    <input type="text" class="form-control" required>
+				    <input type="text" class="form-control" th:field="*{firstName}" required>
 				  </div>
 				  <div class="form-group">
 				    <label for="lastName">Last Name:</label>
-				    <input type="text" class="form-control" required>
-				  </div>
-				  <div class="form-row">
-					  <div class="form-group col-md-5">
-				      	<label for="dob">Birth Date:</label>
-				      	<input type="date" class="form-control" required>
-				      </div>
-				      <div class="col-md-1"></div>
-				      <div class="form-group col-md-6">
-				      	<label for="phoneNumber" style="display:block;">Phone Number:</label>
-				      	<input type="tel" id="phoneNumber" class="form-control" required />
-				      </div>
-			      </div>
-			      <div class="form-group">
-				    <label for="inputAddress">Address:</label>
-				    <input type="text" class="form-control" id="address" placeholder="1234 Main St">
+				    <input type="text" class="form-control" th:field="*{lastName}" required>
 				  </div>
 				  <div class="form-group">
-				    <label for="inputAddress2">Address 2:</label>
-				    <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor">
+			      	<label for="dob">Birth Date:</label>
+			      	<input type="date" class="form-control" th:field="*{dob}" required>
+			      </div>
+			      <div class="col-md-1"></div>
+			      <div class="form-group">
+			      	<label for="phoneNumber">Phone Number:</label>
+			      	<input type="tel" th:field="*{phoneNumber}" class="form-control" required />
+			      </div>
+			      <div class="form-group">
+				    <label for="address.address1">Address 1:</label>
+				    <input type="text" class="form-control" th:field="*{address.address1}" placeholder="1234 Main St">
+				  </div>
+				  <div class="form-group">
+				    <label for="address.address2">Address 2:</label>
+				    <input type="text" class="form-control" th:field="*{address.address2}" placeholder="Apartment, studio, or floor">
 				  </div>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
-				      <label for="city">City:</label>
-				      <input type="text" class="form-control" id="city">
+				      <label for="address.city">City:</label>
+				      <input type="text" class="form-control" th:field="*{address.city}" required>
 				    </div>
 				    <div class="form-group col-md-4">
-				      <label for="province">Province:</label>
-				      <select id="province" class="form-control">
+				      <label for="address.province">Province:</label>
+				      <select class="form-control" th:field="*{address.province}" required>
 				        <option value="" selected>Choose a Province</option>
 				        <option value="AB">Alberta</option>
 						<option value="BC">British Columbia</option>
@@ -96,8 +89,8 @@
 				      </select>
 				    </div>
 				    <div class="form-group col-md-2">
-				      <label for="postalCode">Postal Code:</label>
-				      <input type="text" class="form-control" id="postalCode">
+				      <label for="address.postalCode">Postal Code:</label>
+				      <input type="text" class="form-control" th:field="*{address.postalCode}" required>
 				    </div>
 				  </div>
 				  
@@ -111,12 +104,4 @@
 	<div th:replace="~{fragments :: footer}"></div>
 	<div th:replace="~{fragments :: scripts}"></div>
 </body>
-<script>
-  const phoneNumber = document.querySelector("#phoneNumber");
-  const phoneNumberInput = window.intlTelInput(phoneNumber, {
-	preferredCountries: ["ca", "us"],
-    utilsScript:
-      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-  });
-</script>
 </html>

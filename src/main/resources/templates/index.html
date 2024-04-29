@@ -15,8 +15,9 @@
 			<form>
 			  <div class="row">
 			    <div class="col">
-			      <input type="text" class="form-control form-control-lg text-center" placeholder="Search By Title/Authors/Genre">
+			      <input type="text" id="searchBox" class="form-control form-control-lg text-center" placeholder="Search By Title/Authors/Genre">
 			    </div>
+			    <a th:href="'javascript:search()'" class="btn btn-success btn-lg" style="min-width: 100px">Search</a>
 			  </div>
 			</form>
 		</div>
@@ -35,96 +36,52 @@
 	        
 	        <div class="px-3 mb-4">
 	        	<div class="row">
-	        		<div class="rounded-3 border border-1 border-success-subtle col mx-4">
-		            	<img class="left-0 top-0 my-4 col-12 img-fluid" th:src="@{/img/BookLoverKingdom01.jpg}"
+	        		<div th:each="book, iStat : ${bookPage.content}" class="rounded-3 border border-1 border-success-subtle col mx-4 bookInfo">
+		            	<img class="left-0 top-0 my-4 col-12 img-fluid" th:src="@{/bookImages/} + ${book.coverImgPath}"
 		            			style="height:600px;" />
 			            <p class="m-0 px-3 col-12">
 			            	<span class="font-weight-bold d-inline-block text-truncate"
 			            			style="max-width: 280px;">
-			            		<a th:href="@{/}">Wandering Stars</a>
+			            		<a th:href="@{/book/} + ${book.idBook}" th:text="${book.title}"></a>
 			            	</span>
 			            	<span class="d-inline-block text-truncate">by</span> 
-			            	<span class="font-weight-bold d-inline-block text-truncate"><a th:href="@{/}">Tommy Orange</a></span>
+			            	<span class="font-weight-bold d-inline-block text-truncate" th:text="${book.authorFirstName} + ' ' + ${book.authorLastName}"></span>
 			            </p>
-			            <div class="m-0 px-3 col-12">
+			            <!-- <div class="m-0 px-3 col-12">
 			                <i class="fa-solid fa-star"></i>
 			                <i class="fa-solid fa-star"></i>
 			                <i class="fa-solid fa-star"></i>
 			                <i class="fa-solid fa-star"></i>
 			                <i class="fa-regular fa-star"></i>
+		                </div> -->
+		                <div class="m-0 px-3 col-12">
+			                <span>Rating:</span>
+			                <span class="font-weight-bold" th:text="${book.rating}"></span>
 		                </div>
 		                <div class="m-0 px-3 col-12">
 			                <span>Price to Rent:</span>
-			                <span class="font-weight-bold text-success">$10.00</span>
+			                <span class="font-weight-bold" th:text="${book.rentPrice}"></span>
 		                </div>
 		                <div class="m-0 px-3 col-12 mb-4">
 			                <span>Buying Option:</span>
-			                <span class="font-weight-bold text-danger">No</span>
+			                <span class="font-weight-bold" th:text="${book.isForSale}" th:classappend="${book.isForSale ? 'text-success' : 'text-danger'}"></span>
 		                </div>
 		            </div>
 		            
-		            <div class="rounded-3 border border-1 border-success-subtle col mx-4">
-		            	<img class="left-0 top-0 my-4 col-12 img-fluid" th:src="@{/img/BookLoverKingdom02.jpg}"
-		            			style="height:600px;" />
-		            	<p class="m-0 px-3 col-12">
-			            	<span class="font-weight-bold d-inline-block text-truncate"
-			            			style="max-width: 280px;">
-			            		<a th:href="@{/}">Welcome to the Hyunam-Dong Bookshop</a>
-			            	</span>
-			            	<span class="d-inline-block text-truncate">by</span> 
-			            	<span class="font-weight-bold d-inline-block text-truncate"><a th:href="@{/}">Hwang Bo-Reum</a></span>
-			            </p>
-			            <div class="m-0 px-3 col-12">
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-regular fa-star"></i>
-		                </div>
-		                <div class="m-0 px-3 col-12">
-			                <span>Price to Rent:</span>
-			                <span class="font-weight-bold text-success">$10.50</span>
-		                </div>
-		                <div class="m-0 px-3 col-12 mb-4">
-			                <span>Buying Option:</span>
-			                <span class="font-weight-bold text-success">Yes</span>
-		                </div>
-		            </div>
-		            
-		            <div class="rounded-3 border border-1 border-success-subtle col mx-4">
-		            	<img class="left-0 top-0 my-4 col-12 img-fluid" th:src="@{/img/BookLoverKingdom03.jpg}" 
-		            			style="height:600px;" />
-			            <p class="m-0 px-3 col-12">
-			            	<span class="font-weight-bold d-inline-block text-truncate"
-			            			style="max-width: 280px;">
-			            		<a th:href="@{/}">The Teacher</a>
-			            	</span>
-			            	<span class="d-inline-block text-truncate">by</span> 
-			            	<span class="font-weight-bold d-inline-block text-truncate"><a th:href="@{/}">Freida McFadden</a></span>
-			            </p>
-			            <div class="m-0 px-3 col-12">
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-solid fa-star"></i>
-			                <i class="fa-regular fa-star"></i>
-		                </div>
-		                <div class="m-0 px-3 col-12">
-			                <span>Price to Rent:</span>
-			                <span class="font-weight-bold text-success">$11.00</span>
-		                </div>
-		                <div class="m-0 px-3 col-12 mb-4">
-			                <span>Buying Option:</span>
-			                <span class="font-weight-bold text-danger">No</span>
-		                </div>
-		            </div>
+		            <div th:if="${bookPage.totalPages > 0}" class="pagination"
+					    th:each="pageNumber : ${pageNumbers}">
+					    <a th:href="@{/ + (size=${bookPage.size}, page=${pageNumber})}"
+					        th:text=${pageNumber}
+					        th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+					</div>
 	        	</div>
 	        </div>
         </div>
-		<div class="col"></div>
+		<!-- <div class="col"></div>  -->
 	</div>
 	
 	<div th:replace="~{fragments :: footer}"></div>
 	<div th:replace="~{fragments :: scripts}"></div>
+	<div th:replace="~{fragments :: scripts_list}"></div>
 </body>
 </html>
